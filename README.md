@@ -5,3 +5,12 @@ to enter moves using simple from-to notation like e2-e4.
 
 Program takes care of keeping players from performing illegal moves.
 Recognizes game over scenarios.
+
+
+To compile the program:
+
+./build.sh
+
+To run the game:
+
+./run.sh
