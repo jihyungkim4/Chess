@@ -17,13 +17,9 @@ public class Chess {
 	 */
 	
      static Board board;
-     public static ReturnPlay play(String move) {
 
-		/* FILL IN THIS METHOD */
-		
-		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
+     public static ReturnPlay play(String move) {
+        return board.play(move);
 	}
 	
 	
@@ -33,7 +29,9 @@ public class Chess {
 	public static void start() {
 		/* FILL IN THIS METHOD */
         board = new Board();
-        board.print();
+        ArrayList<ReturnPiece> pieces = new ArrayList<ReturnPiece>(board.piecesOnBoard);
+        PlayChess.printBoard(pieces);
+        // board.print();
         
 	}
 }

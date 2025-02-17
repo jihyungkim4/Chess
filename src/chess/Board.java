@@ -36,6 +36,10 @@ class Board {
         } 
         return null;
     }
+
+    public ReturnPlay play(String move) {
+        return null;
+    }
     
     public void print() {
         boolean isWhite = true;
@@ -59,5 +63,7 @@ class Board {
         for (int f = 1; f < 9; f++) {
             System.out.print(" " + Piece.mapIntToFile(f) + " ");
         }
+        System.out.println();
     }
+    
 }
