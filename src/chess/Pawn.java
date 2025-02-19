@@ -22,10 +22,7 @@ class Pawn extends Piece {
         }
     }
     @Override
-    public ReturnPlay move(Board board, String dest) {
-        ReturnPlay returnPlay = new ReturnPlay();
-        returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-        returnPlay.piecesOnBoard = new ArrayList<ReturnPiece>(board.piecesOnBoard);
-        return returnPlay;
+    public ReturnPlay.Message move(Board board, String dest) {
+        return ReturnPlay.Message.ILLEGAL_MOVE;
     }
 }

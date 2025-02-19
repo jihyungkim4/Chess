@@ -25,6 +25,6 @@ abstract class Piece extends ReturnPiece {
 
     public abstract void print();
 
-    public abstract ReturnPlay move(Board board, String dest);
+    public abstract ReturnPlay.Message move(Board board, String dest);
 }
 

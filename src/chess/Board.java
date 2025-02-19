@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 class Board {	
 	ArrayList<Piece> piecesOnBoard;
+    Piece[][] board = new Piece[8][8];
+    Chess.Player nextPlayer = Chess.Player.white;
 	
     public Board() {
         piecesOnBoard = new ArrayList<Piece>();
@@ -37,8 +39,54 @@ class Board {
         return null;
     }
 
+    private void updateBoard() {
+        // clear board before update
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                board[x][y] = null;               
+            }
+        }
+        // place remaining pieces on the board              
+        for (Piece piece : piecesOnBoard) {
+           board[piece.pieceRank - 1][piece.pieceFile.ordinal()] = piece;               
+        } 
+    }
+
+    private ReturnPlay makeReturnPlay(ReturnPlay.Message message) {
+        ReturnPlay returnPlay = new ReturnPlay();
+        returnPlay.message = message;
+        returnPlay.piecesOnBoard = new ArrayList<ReturnPiece>(piecesOnBoard);
+        return returnPlay;
+    }
+
     public ReturnPlay play(String move) {
-        return null;
+        // 1. parse move 
+        // up to 3 tokens permitted. 1 token - resign, 2 tokens - regular move (e2 e4), 3 tokens - promotion or draw (g7 g8 N (letter optional if omitted Q)) / e2 e4 draw?)
+        // 2. keep track of game state
+        // who's turn is it next? -> starts with white
+        // is game over?
+        // 3. find piece at the from location (make sure the player is moving a piece and the piece is their own color)
+        // Illegal move does not consume a move.
+        // If game isn't over, and piece is legal - delegate work to piece
+        updateBoard();
+    
+        Piece pieceToMove = null;
+        // if no piece is selected 
+        if (pieceToMove == null) {
+            return makeReturnPlay(ReturnPlay.Message.ILLEGAL_MOVE);
+        }
+        String moveTo = "e4"; 
+        ReturnPlay.Message message = pieceToMove.move(this, moveTo);
+
+        // normal move
+        if (message == null){
+            if (nextPlayer == Chess.Player.white) {
+                nextPlayer = Chess.Player.black;
+            } else {
+                nextPlayer = Chess.Player.white;
+            }
+        }
+        return makeReturnPlay(message);
     }
     
     public void print() {
