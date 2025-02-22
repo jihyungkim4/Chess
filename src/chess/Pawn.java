@@ -22,7 +22,7 @@ class Pawn extends Piece {
         }
     }
     @Override
-    public ReturnPlay.Message move(Board board, String dest) {
+    public ReturnPlay.Message move(Board board, Coord dest) {
         return ReturnPlay.Message.ILLEGAL_MOVE;
     }
 }

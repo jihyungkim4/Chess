@@ -6,6 +6,7 @@ class Board {
 	ArrayList<Piece> piecesOnBoard;
     Piece[][] board = new Piece[8][8];
     Chess.Player nextPlayer = Chess.Player.white;
+    boolean gameOver = false;
 	
     public Board() {
         piecesOnBoard = new ArrayList<Piece>();
@@ -59,6 +60,14 @@ class Board {
         return returnPlay;
     }
 
+    private ReturnPlay makeIllegalMove() {
+        return makeReturnPlay(ReturnPlay.Message.ILLEGAL_MOVE);
+    }
+
+    private Piece getPiece(Coord coord) {
+        return board[coord.r][coord.f];
+    }
+
     public ReturnPlay play(String move) {
         // 1. parse move 
         // up to 3 tokens permitted. 1 token - resign, 2 tokens - regular move (e2 e4), 3 tokens - promotion or draw (g7 g8 N (letter optional if omitted Q)) / e2 e4 draw?)
@@ -69,23 +78,70 @@ class Board {
         // Illegal move does not consume a move.
         // If game isn't over, and piece is legal - delegate work to piece
         updateBoard();
-    
-        Piece pieceToMove = null;
-        // if no piece is selected 
-        if (pieceToMove == null) {
-            return makeReturnPlay(ReturnPlay.Message.ILLEGAL_MOVE);
+
+        // if game is already over, no more moves
+        if (gameOver) {
+            return makeIllegalMove();
         }
-        String moveTo = "e4"; 
-        ReturnPlay.Message message = pieceToMove.move(this, moveTo);
+
+        String[] moveTokens = move.split(" ");
+
+        // if number of tokens is more than 3 or less than 1, move automatically illegal
+        int numTokens = moveTokens.length;
+        if (numTokens > 3 || numTokens < 1) {
+            return makeIllegalMove();
+        }
+ 
+        if (numTokens == 1) {
+            if (moveTokens[0].equals("resign")) {
+                if (nextPlayer == Chess.Player.white) {
+                    gameOver = true;
+                    return makeReturnPlay(ReturnPlay.Message.RESIGN_BLACK_WINS);
+                }
+                gameOver = true; 
+                return makeReturnPlay(ReturnPlay.Message.RESIGN_WHITE_WINS);
+            }
+            return makeIllegalMove(); 
+        }
+
+        Coord from = Coord.parse(moveTokens[0]);
+        Coord to = Coord.parse(moveTokens[1]);
+
+        if (from == null || to == null) {
+            return makeIllegalMove();
+        }
+
+        Piece fromPiece = getPiece(from);
+        Piece toPiece = getPiece(to);
+
+        // first check some common rules that apply to all pieces
+
+        if (fromPiece == null) {
+            // must have a piece to move
+            return makeIllegalMove();
+        }
+
+        if (fromPiece.getPlayer() != nextPlayer) {
+            // can not move opponent's piece
+            return makeIllegalMove();
+        }
+
+        if (toPiece != null && toPiece.getPlayer() == nextPlayer) {
+            // can not attack own piece
+            return makeIllegalMove();
+        }
+
+        ReturnPlay.Message message = fromPiece.move(this, to);
 
         // normal move
-        if (message == null){
+        if (message == null) {
             if (nextPlayer == Chess.Player.white) {
                 nextPlayer = Chess.Player.black;
             } else {
                 nextPlayer = Chess.Player.white;
             }
         }
+
         return makeReturnPlay(message);
     }
     

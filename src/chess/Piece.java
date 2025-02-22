@@ -23,8 +23,15 @@ abstract class Piece extends ReturnPiece {
         return pieceRank == rank && pieceFile == mapIntToFile(file);
     } 
 
+    Chess.Player getPlayer() {
+        if (isWhite) {
+            return Chess.Player.white;
+        }
+        return Chess.Player.black;
+    }
+
     public abstract void print();
 
-    public abstract ReturnPlay.Message move(Board board, String dest);
+    public abstract ReturnPlay.Message move(Board board, Coord dest);
 }
 

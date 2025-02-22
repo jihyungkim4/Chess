@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Chess {
 
-        enum Player { white, black }
+    enum Player { white, black }
     
 	/**
 	 * Plays the next move for whichever player has the turn.
