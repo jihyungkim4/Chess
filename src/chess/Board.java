@@ -11,6 +11,8 @@ class Board {
     public Board() {
         piecesOnBoard = new ArrayList<Piece>();
 
+        // add all pawns
+
         piecesOnBoard.add(new Pawn(true, 2, 1));
         piecesOnBoard.add(new Pawn(true, 2, 2));
         piecesOnBoard.add(new Pawn(true, 2, 3));
@@ -28,7 +30,32 @@ class Board {
         piecesOnBoard.add(new Pawn(false, 7, 6));
         piecesOnBoard.add(new Pawn(false, 7, 7));
         piecesOnBoard.add(new Pawn(false, 7, 8));
-                
+
+        // add rooks
+        piecesOnBoard.add(new Rook(true, 1, 1));
+        piecesOnBoard.add(new Rook(true, 1, 8));
+        piecesOnBoard.add(new Rook(false, 8, 1));
+        piecesOnBoard.add(new Rook(false, 8, 8));
+
+        // add bishops
+        piecesOnBoard.add(new Bishop(true, 1, 3));
+        piecesOnBoard.add(new Bishop(true, 1, 6));
+        piecesOnBoard.add(new Bishop(false, 8, 3));
+        piecesOnBoard.add(new Bishop(false, 8, 6));
+
+        // add knights
+        piecesOnBoard.add(new Knight(true, 1, 2));
+        piecesOnBoard.add(new Knight(true, 1, 7));
+        piecesOnBoard.add(new Knight(false, 8, 2));
+        piecesOnBoard.add(new Knight(false, 8, 7));
+
+        // add kings
+        piecesOnBoard.add(new King(true, 1, 5));
+        piecesOnBoard.add(new King(false, 8, 5));
+        
+        // add queens
+        piecesOnBoard.add(new Queen(true, 1, 4));
+        piecesOnBoard.add(new Queen(false, 8, 4));
     }
 
     public Piece getPiece(int rank, int file) {   
