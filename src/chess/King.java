@@ -2,23 +2,23 @@ package chess;
 
 import java.util.ArrayList;
 
-class Pawn extends Piece {
+class King extends Piece {
     
-    public Pawn(boolean isWhite, int rank, int file) {
+    public King(boolean isWhite, int rank, int file) {
         super(isWhite, rank, file);
 
         if (isWhite) {
-            pieceType = PieceType.WP;
+            pieceType = PieceType.WK;
         } else {
-            pieceType = PieceType.BP;
+            pieceType = PieceType.BK;
         }
     }
     @Override
     public void print() {
         if (isWhite) {
-            System.out.print("wP ");
+            System.out.print("wK ");
         } else {
-            System.out.print("bP ");
+            System.out.print("bK ");
         }
     }
     @Override

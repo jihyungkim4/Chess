@@ -68,6 +68,48 @@ class Board {
         return board[coord.r][coord.f];
     }
 
+    // function returns the location of the king of the next player to move
+    private Coord getKing(Chess.Player player) {
+        Piece.PieceType matchingKing = (player == Chess.Player.white) ? Piece.PieceType.WK : Piece.PieceType.BK;  
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (board[x][y].pieceType == matchingKing) {
+                    // rank, file 
+                    return new Coord(x,y);
+                }
+            }
+        }
+        return null; // should never get here!
+    }
+
+    private boolean isKingInCheck(Coord kingCoord) {
+        Piece king = getPiece(kingCoord);
+        Chess.Player kingPlayer = king.getPlayer();
+        Chess.Player opponentColor = otherPlayer(kingPlayer);
+
+        for (Piece piece : piecesOnBoard) {
+            if (piece.getPlayer() == opponentColor) {
+                if (piece.canTarget(this, kingCoord)) {
+                    return true;
+                }
+            }                
+        }
+        return false; 
+    }
+
+    private boolean isKingInCheckmate(Coord kingCoord) {
+        if (!isKingInCheck(kingCoord)) {
+            return false;
+        } 
+        // can the king move?
+        Piece king = getPiece(kingCoord);
+        return king.canMove(this);
+    }
+
+    private Chess.Player otherPlayer(Chess.Player player) {
+        return (player == Chess.Player.white) ? Chess.Player.black : Chess.Player.white;
+    }
+
     public ReturnPlay play(String move) {
         // 1. parse move 
         // up to 3 tokens permitted. 1 token - resign, 2 tokens - regular move (e2 e4), 3 tokens - promotion or draw (g7 g8 N (letter optional if omitted Q)) / e2 e4 draw?)
@@ -103,7 +145,15 @@ class Board {
             }
             return makeIllegalMove(); 
         }
+        boolean drawOffered = false;
 
+        if (numTokens == 3) {
+            if (!moveTokens[2].equals("draw?")) {
+                return makeIllegalMove();
+            }
+            drawOffered = true;
+        }
+        
         Coord from = Coord.parse(moveTokens[0]);
         Coord to = Coord.parse(moveTokens[1]);
 
@@ -131,17 +181,35 @@ class Board {
             return makeIllegalMove();
         }
 
-        ReturnPlay.Message message = fromPiece.move(this, to);
-
-        // normal move
-        if (message == null) {
-            if (nextPlayer == Chess.Player.white) {
-                nextPlayer = Chess.Player.black;
-            } else {
-                nextPlayer = Chess.Player.white;
-            }
+        // will moving put my king in check
+        fromPiece.movePending = true;
+        if (isKingInCheck(getKing(nextPlayer))) {
+            fromPiece.movePending = false;
+            return makeIllegalMove();
         }
 
+        fromPiece.movePending = false;
+        ReturnPlay.Message message = fromPiece.move(this, to);
+        
+        // normal move
+        if (message == null) {
+            if (isKingInCheckmate(getKing(otherPlayer(nextPlayer)))) {
+                gameOver = true;
+                return (nextPlayer == Chess.Player.white) ? makeReturnPlay(ReturnPlay.Message.CHECKMATE_WHITE_WINS) :  makeReturnPlay(ReturnPlay.Message.CHECKMATE_BLACK_WINS);
+            }  
+            nextPlayer = otherPlayer(nextPlayer);
+
+            if (drawOffered) {
+                // if a player puts another player in check and asks for a draw the draw is accepted
+                gameOver = true;
+                return makeReturnPlay(ReturnPlay.Message.DRAW);
+            }
+
+            // is opponents king in check?
+            if (isKingInCheck(getKing(nextPlayer))) {
+                return makeReturnPlay(ReturnPlay.Message.CHECK);
+            } 
+        }
         return makeReturnPlay(message);
     }
     
