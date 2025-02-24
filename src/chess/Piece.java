@@ -33,6 +33,31 @@ abstract class Piece extends ReturnPiece {
         return Chess.Player.black;
     }
 
+    Coord currentCoord() {
+        return new Coord(pieceRank - 1, pieceFile.ordinal());
+    }
+
+    boolean checkMove(Coord dst, Board board) {
+        if (dst != null) {
+            Piece p = board.getPiece(dst);
+            if (p == null || p.getPlayer() != getPlayer()) { // can either take piece or no piece on destination
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void updatePosition(Coord coord, Board board) {
+        Piece targetPiece = board.getPiece(coord);
+        if (targetPiece != null) {
+            // remove piece
+            board.removePiece(coord);
+            board.piecesOnBoard.remove(targetPiece);
+        }
+        pieceRank = coord.r + 1;
+        pieceFile = mapIntToFile(coord.f + 1);   
+    }
+
     public abstract void print();
 
     public abstract ReturnPlay.Message move(Board board, Coord dest);

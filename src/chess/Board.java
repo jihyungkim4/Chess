@@ -13,41 +13,41 @@ class Board {
 
         // add all pawns
 
-        piecesOnBoard.add(new Pawn(true, 2, 1));
-        piecesOnBoard.add(new Pawn(true, 2, 2));
-        piecesOnBoard.add(new Pawn(true, 2, 3));
-        piecesOnBoard.add(new Pawn(true, 2, 4));
-        piecesOnBoard.add(new Pawn(true, 2, 5));
-        piecesOnBoard.add(new Pawn(true, 2, 6));
-        piecesOnBoard.add(new Pawn(true, 2, 7));
-        piecesOnBoard.add(new Pawn(true, 2, 8));
+        // piecesOnBoard.add(new Pawn(true, 2, 1));
+        // piecesOnBoard.add(new Pawn(true, 2, 2));
+        // piecesOnBoard.add(new Pawn(true, 2, 3));
+        // piecesOnBoard.add(new Pawn(true, 2, 4));
+        // piecesOnBoard.add(new Pawn(true, 2, 5));
+        // piecesOnBoard.add(new Pawn(true, 2, 6));
+        // piecesOnBoard.add(new Pawn(true, 2, 7));
+        // piecesOnBoard.add(new Pawn(true, 2, 8));
        
-        piecesOnBoard.add(new Pawn(false, 7, 1));
-        piecesOnBoard.add(new Pawn(false, 7, 2));
-        piecesOnBoard.add(new Pawn(false, 7, 3));
-        piecesOnBoard.add(new Pawn(false, 7, 4));
-        piecesOnBoard.add(new Pawn(false, 7, 5));
-        piecesOnBoard.add(new Pawn(false, 7, 6));
-        piecesOnBoard.add(new Pawn(false, 7, 7));
-        piecesOnBoard.add(new Pawn(false, 7, 8));
+        // piecesOnBoard.add(new Pawn(false, 7, 1));
+        // piecesOnBoard.add(new Pawn(false, 7, 2));
+        // piecesOnBoard.add(new Pawn(false, 7, 3));
+        // piecesOnBoard.add(new Pawn(false, 7, 4));
+        // piecesOnBoard.add(new Pawn(false, 7, 5));
+        // piecesOnBoard.add(new Pawn(false, 7, 6));
+        // piecesOnBoard.add(new Pawn(false, 7, 7));
+        // piecesOnBoard.add(new Pawn(false, 7, 8));
 
         // add rooks
-        piecesOnBoard.add(new Rook(true, 1, 1));
-        piecesOnBoard.add(new Rook(true, 1, 8));
-        piecesOnBoard.add(new Rook(false, 8, 1));
-        piecesOnBoard.add(new Rook(false, 8, 8));
+        // piecesOnBoard.add(new Rook(true, 1, 1));
+        // piecesOnBoard.add(new Rook(true, 1, 8));
+        // piecesOnBoard.add(new Rook(false, 8, 1));
+        // piecesOnBoard.add(new Rook(false, 8, 8));
 
         // add bishops
-        piecesOnBoard.add(new Bishop(true, 1, 3));
-        piecesOnBoard.add(new Bishop(true, 1, 6));
-        piecesOnBoard.add(new Bishop(false, 8, 3));
-        piecesOnBoard.add(new Bishop(false, 8, 6));
+        // piecesOnBoard.add(new Bishop(true, 1, 3));
+        // piecesOnBoard.add(new Bishop(true, 1, 6));
+        // piecesOnBoard.add(new Bishop(false, 8, 3));
+        // piecesOnBoard.add(new Bishop(false, 8, 6));
 
         // add knights
-        piecesOnBoard.add(new Knight(true, 1, 2));
-        piecesOnBoard.add(new Knight(true, 1, 7));
-        piecesOnBoard.add(new Knight(false, 8, 2));
-        piecesOnBoard.add(new Knight(false, 8, 7));
+        // piecesOnBoard.add(new Knight(true, 1, 2));
+        // piecesOnBoard.add(new Knight(true, 1, 7));
+        // piecesOnBoard.add(new Knight(false, 8, 2));
+        // piecesOnBoard.add(new Knight(false, 8, 7));
 
         // add kings
         piecesOnBoard.add(new King(true, 1, 5));
@@ -91,8 +91,12 @@ class Board {
         return makeReturnPlay(ReturnPlay.Message.ILLEGAL_MOVE);
     }
 
-    private Piece getPiece(Coord coord) {
+    Piece getPiece(Coord coord) {
         return board[coord.r][coord.f];
+    }
+
+    void removePiece(Coord coord) {
+        board[coord.r][coord.f] = null;
     }
 
     // function returns the location of the king of the next player to move
@@ -100,7 +104,7 @@ class Board {
         Piece.PieceType matchingKing = (player == Chess.Player.white) ? Piece.PieceType.WK : Piece.PieceType.BK;  
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                if (board[x][y].pieceType == matchingKing) {
+                if (board[x][y] != null && board[x][y].pieceType == matchingKing) {
                     // rank, file 
                     return new Coord(x,y);
                 }
@@ -130,10 +134,10 @@ class Board {
         } 
         // can the king move?
         Piece king = getPiece(kingCoord);
-        return king.canMove(this);
+        return !king.canMove(this);
     }
 
-    private Chess.Player otherPlayer(Chess.Player player) {
+    Chess.Player otherPlayer(Chess.Player player) {
         return (player == Chess.Player.white) ? Chess.Player.black : Chess.Player.white;
     }
 
@@ -209,13 +213,15 @@ class Board {
         }
 
         // will moving put my king in check
-        fromPiece.movePending = true;
-        if (isKingInCheck(getKing(nextPlayer))) {
+        if (fromPiece.pieceType != ReturnPiece.PieceType.BK && fromPiece.pieceType != ReturnPiece.PieceType.WK) {
+            fromPiece.movePending = true;
+            if (isKingInCheck(getKing(nextPlayer))) {
+                fromPiece.movePending = false;
+                return makeIllegalMove();
+            }
             fromPiece.movePending = false;
-            return makeIllegalMove();
         }
-
-        fromPiece.movePending = false;
+        
         ReturnPlay.Message message = fromPiece.move(this, to);
         
         // normal move
