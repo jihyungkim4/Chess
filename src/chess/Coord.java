@@ -83,6 +83,10 @@ class Coord {
         return makeCoordIfValid(r - 1, f - 1);
     }
 
+    Coord step(int rankOffset, int fileOffset) {
+        return makeCoordIfValid(r + rankOffset, f + fileOffset);
+    }
+
     boolean equals(Coord other) {
         if (other == null) {
             return false;
