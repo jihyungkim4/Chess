@@ -1,0 +1,9 @@
+INITIAL [b2:WP, b4:BP, c3:BP, e1:WK, e8:BK] white
+
+# can capture north east
+white b2 c3 OK [c3:WP, b4:BP, e1:WK, e8:BK]
+
+black e8 e7 OK [c3:WP, b4:BP, e1:WK, e7:BK]
+
+# can capture north west
+white c3 b4 OK [b4:WP, e1:WK, e7:BK]

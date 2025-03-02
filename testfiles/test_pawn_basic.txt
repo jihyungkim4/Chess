@@ -1,0 +1,28 @@
+INITIAL [a2:WP, a3:BP, e1:WK, e8:BK] white
+
+# can not move back
+white a2 a1 ILLEGAL_MOVE [a2:WP, a3:BP, e1:WK, e8:BK]
+
+# can not diagonally without capture
+white a2 b3 ILLEGAL_MOVE [a2:WP, a3:BP, e1:WK, e8:BK]
+
+# can not move into opponent pawn
+white a2 a3 ILLEGAL_MOVE [a2:WP, a3:BP, e1:WK, e8:BK]
+
+# can not jump over opponent pawn
+white a2 a4 ILLEGAL_MOVE [a2:WP, a3:BP, e1:WK, e8:BK]
+
+# make a legal white move to switch side to black
+white e1 f1 OK [a2:WP, a3:BP, f1:WK, e8:BK]
+
+# can not move back
+black a3 a4 ILLEGAL_MOVE [a2:WP, a3:BP, f1:WK, e8:BK]
+
+# can not move diagonally without capture
+black a3 b2 ILLEGAL_MOVE [a2:WP, a3:BP, f1:WK, e8:BK]
+
+# can not move into opponent pawn
+black a3 a2 ILLEGAL_MOVE [a2:WP, a3:BP, f1:WK, e8:BK]
+
+# can not jump over opponent pawn
+black a3 a1 ILLEGAL_MOVE [a2:WP, a3:BP, f1:WK, e8:BK]

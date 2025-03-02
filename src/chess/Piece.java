@@ -9,7 +9,7 @@ abstract class Piece extends ReturnPiece {
         if (file < 1 || file > 8) {
             throw new IllegalArgumentException("File must be between 1 and 8");
         }
-        return PieceFile.values()[file - 1];  
+        return PieceFile.values()[file - 1];
     }
 
     public Piece(boolean isWhite, int rank, int file) {
@@ -21,10 +21,10 @@ abstract class Piece extends ReturnPiece {
         pieceRank = rank;
         pieceFile = mapIntToFile(file);
     }
-    
+
     boolean locationEquals(int rank, int file) {
         return pieceRank == rank && pieceFile == mapIntToFile(file);
-    } 
+    }
 
     Chess.Player getPlayer() {
         if (isWhite) {
@@ -55,15 +55,24 @@ abstract class Piece extends ReturnPiece {
             board.piecesOnBoard.remove(targetPiece);
         }
         pieceRank = coord.r + 1;
-        pieceFile = mapIntToFile(coord.f + 1);   
+        pieceFile = mapIntToFile(coord.f + 1);
     }
 
     public abstract void print();
 
+    // moves the piece to the specified coordinates returning the result
+    // of the move and the new board state. In case of valid captures
+    // opponent pieces are removed.
     public abstract ReturnPlay.Message move(Board board, Coord dest);
 
-    public abstract boolean canTarget(Board board, Coord coord); 
+    // returns true if a piece can attack or move to the specified square,
+    // attackOnly is true if only attacking moves are to be considered
+    // attackOnly is false when capture or non-capture moves should be
+    // considered. Any pieces of the opponent with "movePending" are to
+    // be ignored as if they did not exist.
+    public abstract boolean canTarget(Board board, Coord coord, boolean attackOnly);
 
-    public abstract boolean canMove(Board board); 
+    // return true if a piece can make any legal move, (do not consider safety of
+    // own king)
+    public abstract boolean canMove(Board board);
 }
-

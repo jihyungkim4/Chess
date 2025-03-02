@@ -1,0 +1,13 @@
+INITIAL [a3:WP, b2:WP, b4:BP, d2:WP, c3:BP, e1:WK, e8:BK] black
+
+# can not capture its own pawn to south east
+black b4 c3 ILLEGAL_MOVE [a3:WP, b2:WP, b4:BP, d2:WP, c3:BP, e1:WK, e8:BK]
+
+# can capture south east, also check white king
+black c3 d2 CHECK [a3:WP, b2:WP, b4:BP, d2:BP, e1:WK, e8:BK]
+
+# king moves out of check
+white e1 f1 OK [a3:WP, b2:WP, b4:BP, d2:BP, f1:WK, e8:BK]
+
+# can capture north west
+white b4 a3 OK [b2:WP, a3:BP, d2:BP, f1:WK, e8:BK]

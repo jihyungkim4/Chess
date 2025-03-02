@@ -1,0 +1,13 @@
+# test en passant 1
+
+INITIAL [a2:WP, b7:BP, e1:WK, e8:BK] white
+
+white a2 a3 OK [a3:WP, b7:BP, e1:WK, e8:BK]
+black e8 e7 OK [a3:WP, b7:BP, e1:WK, e7:BK]
+white a3 a4 OK [a4:WP, b7:BP, e1:WK, e7:BK]
+black b7 b5 OK [a4:WP, b5:BP, e1:WK, e7:BK]
+white a4 a5 OK [a5:WP, b5:BP, e1:WK, e7:BK]
+black e7 e8 OK [a5:WP, b5:BP, e1:WK, e8:BK]
+
+# en passant capture is not legal because long move was not immediately before this one
+white a5 b6 ILLEGAL_MOVE [a5:WP, b5:BP, e1:WK, e8:BK]

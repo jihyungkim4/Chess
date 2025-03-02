@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 class Knight extends Piece {
-    
+
     public Knight(boolean isWhite, int rank, int file) {
         super(isWhite, rank, file);
 
@@ -15,6 +15,7 @@ class Knight extends Piece {
             pieceType = PieceType.BN;
         }
     }
+
     @Override
     public void print() {
         if (isWhite) {
@@ -26,7 +27,7 @@ class Knight extends Piece {
 
     @Override
     public ReturnPlay.Message move(Board board, Coord dest) {
-        if (!canTarget(board, dest)) {
+        if (!canTarget(board, dest, false)) {
             return ReturnPlay.Message.ILLEGAL_MOVE;
         }
         updatePosition(dest, board);
@@ -34,16 +35,15 @@ class Knight extends Piece {
     }
 
     @Override
-    public boolean canTarget(Board board, Coord target) {
+    public boolean canTarget(Board board, Coord target, boolean attackOnly) {
         Coord src = currentCoord();
-        
+
         // list of all possible moves
         List<Coord> possibleMoves = Arrays.asList(
-            src.step(2, 1), src.step(2, -1),
-            src.step(-2, 1), src.step(-2, -1),
-            src.step(1, 2), src.step(1, -2),
-            src.step(-1, 2), src.step(-1, -2)
-        );
+                src.step(2, 1), src.step(2, -1),
+                src.step(-2, 1), src.step(-2, -1),
+                src.step(1, 2), src.step(1, -2),
+                src.step(-1, 2), src.step(-1, -2));
 
         // check if target coord matches any of the possible moves
         for (Coord move : possibleMoves) {
@@ -55,7 +55,7 @@ class Knight extends Piece {
             }
         }
         return false;
-    } 
+    }
 
     @Override
     public boolean canMove(Board board) {
@@ -63,11 +63,10 @@ class Knight extends Piece {
 
         // list of all possible moves
         List<Coord> possibleMoves = Arrays.asList(
-            src.step(2, 1), src.step(2, -1),
-            src.step(-2, 1), src.step(-2, -1),
-            src.step(1, 2), src.step(1, -2),
-            src.step(-1, 2), src.step(-1, -2)
-        );
+                src.step(2, 1), src.step(2, -1),
+                src.step(-2, 1), src.step(-2, -1),
+                src.step(1, 2), src.step(1, -2),
+                src.step(-1, 2), src.step(-1, -2));
 
         for (Coord move : possibleMoves) {
             if (move != null) {

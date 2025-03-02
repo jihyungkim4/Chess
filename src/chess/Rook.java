@@ -3,7 +3,8 @@ package chess;
 import java.util.ArrayList;
 
 class Rook extends Piece {
-    
+    boolean hasMoved = false;
+
     public Rook(boolean isWhite, int rank, int file) {
         super(isWhite, rank, file);
 
@@ -36,31 +37,41 @@ class Rook extends Piece {
             System.out.print("bR ");
         }
     }
+
     @Override
     public ReturnPlay.Message move(Board board, Coord dest) {
-        if (!canTarget(board, dest)) {
+        if (!canTarget(board, dest, false)) {
             return ReturnPlay.Message.ILLEGAL_MOVE;
         }
         updatePosition(dest, board);
+        hasMoved = true;
         return null;
     }
 
     @Override
-    public boolean canTarget(Board board, Coord target) {
-        if (checkDir(Coord.Dir.N, target, board)) return true;
-        if (checkDir(Coord.Dir.E, target, board)) return true;
-        if (checkDir(Coord.Dir.S, target, board)) return true;
-        if (checkDir(Coord.Dir.W, target, board)) return true;
+    public boolean canTarget(Board board, Coord target, boolean attackOnly) {
+        if (checkDir(Coord.Dir.N, target, board))
+            return true;
+        if (checkDir(Coord.Dir.E, target, board))
+            return true;
+        if (checkDir(Coord.Dir.S, target, board))
+            return true;
+        if (checkDir(Coord.Dir.W, target, board))
+            return true;
         return false;
-    } 
+    }
 
     @Override
     public boolean canMove(Board board) {
         Coord src = currentCoord();
-        if (checkMove(src.stepNorth(), board)) return true;
-        if (checkMove(src.stepEast(), board)) return true;
-        if (checkMove(src.stepSouth(), board)) return true;
-        if (checkMove(src.stepWest(), board)) return true;
+        if (checkMove(src.stepNorth(), board))
+            return true;
+        if (checkMove(src.stepEast(), board))
+            return true;
+        if (checkMove(src.stepSouth(), board))
+            return true;
+        if (checkMove(src.stepWest(), board))
+            return true;
         return false;
     }
 }

@@ -1,0 +1,25 @@
+# Initial position - white to move
+INITIAL [a2:WP, b2:WP, e1:WK, e8:BK] white
+
+# Moves and expected outcomes
+white a2 a4 OK [a4:WP, b2:WP, e1:WK, e8:BK]
+black e8 e7 OK [a4:WP, b2:WP, e1:WK, e7:BK]
+white b2 b4 OK [a4:WP, b4:WP, e1:WK, e7:BK]
+black e7 e6 OK [a4:WP, b4:WP, e1:WK, e6:BK]
+
+# can not make a north east move: not capturing
+white a4 b5 ILLEGAL_MOVE [a4:WP, b4:WP, e1:WK, e6:BK]
+
+# can not make a second long move
+white a4 a6 ILLEGAL_MOVE [a4:WP, b4:WP, e1:WK, e6:BK]
+
+# but a single move is ok
+white a4 a5 OK [a5:WP, b4:WP, e1:WK, e6:BK]
+black e6 e7 OK [a5:WP, b4:WP, e1:WK, e7:BK]
+white a5 a6 OK [a6:WP, b4:WP, e1:WK, e7:BK]
+black e7 e6 OK [a6:WP, b4:WP, e1:WK, e6:BK]
+white a6 a7 OK [a7:WP, b4:WP, e1:WK, e6:BK]
+black e6 e7 OK [a7:WP, b4:WP, e1:WK, e7:BK]
+
+# finally a promotion to Q for white
+white a7 a8 OK [a8:WQ, b4:WP, e1:WK, e7:BK]

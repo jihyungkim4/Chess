@@ -1,0 +1,5 @@
+# Fool's mate
+white f2 f3 OK [a2:WP, b2:WP, c2:WP, d2:WP, e2:WP, f3:WP, g2:WP, h2:WP, a7:BP, b7:BP, c7:BP, d7:BP, e7:BP, f7:BP, g7:BP, h7:BP, a1:WR, h1:WR, a8:BR, h8:BR, c1:WB, f1:WB, c8:BB, f8:BB, b1:WN, g1:WN, b8:BN, g8:BN, e1:WK, e8:BK, d1:WQ, d8:BQ]
+black e7 e5 OK [a2:WP, b2:WP, c2:WP, d2:WP, e2:WP, f3:WP, g2:WP, h2:WP, a7:BP, b7:BP, c7:BP, d7:BP, e5:BP, f7:BP, g7:BP, h7:BP, a1:WR, h1:WR, a8:BR, h8:BR, c1:WB, f1:WB, c8:BB, f8:BB, b1:WN, g1:WN, b8:BN, g8:BN, e1:WK, e8:BK, d1:WQ, d8:BQ]
+white g2 g4 OK [a2:WP, b2:WP, c2:WP, d2:WP, e2:WP, f3:WP, g4:WP, h2:WP, a7:BP, b7:BP, c7:BP, d7:BP, e5:BP, f7:BP, g7:BP, h7:BP, a1:WR, h1:WR, a8:BR, h8:BR, c1:WB, f1:WB, c8:BB, f8:BB, b1:WN, g1:WN, b8:BN, g8:BN, e1:WK, e8:BK, d1:WQ, d8:BQ]
+black d8 h4 CHECKMATE_BLACK_WINS [a2:WP, b2:WP, c2:WP, d2:WP, e2:WP, f3:WP, g4:WP, h2:WP, a7:BP, b7:BP, c7:BP, d7:BP, e5:BP, f7:BP, g7:BP, h7:BP, a1:WR, h1:WR, a8:BR, h8:BR, c1:WB, f1:WB, c8:BB, f8:BB, b1:WN, g1:WN, b8:BN, g8:BN, e1:WK, e8:BK, d1:WQ, h4:BQ]

@@ -1,0 +1,10 @@
+INITIAL [e1:WK, h1:WR, e8:BK, h8:BR, a8:BR] white
+
+# white can castle
+white e1 g1 OK [g1:WK, f1:WR, e8:BK, h8:BR, a8:BR]
+
+# black can not short castle because white rook snipes f8
+black e8 g8 ILLEGAL_MOVE [g1:WK, f1:WR, e8:BK, h8:BR, a8:BR]
+
+# black can still long castle
+black e8 b8 OK [g1:WK, f1:WR, b8:BK, h8:BR, c8:BR]
