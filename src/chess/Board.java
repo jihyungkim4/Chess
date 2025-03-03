@@ -280,7 +280,7 @@ class Board {
             return makeIllegalMove();
         }
 
-        String[] moveTokens = move.split(" ");
+        String[] moveTokens = move.trim().split(" ");
 
         // if number of tokens is more than 3 or less than 1, move automatically illegal
         int numTokens = moveTokens.length;
