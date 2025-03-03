@@ -199,12 +199,65 @@ class Board {
     }
 
     private boolean isKingInCheckmate(Coord kingCoord) {
+        // king is in check
         if (!isKingInCheck(kingCoord)) {
             return false;
         }
         // can the king move?
         Piece king = getPiece(kingCoord);
-        return !king.canMove(this);
+        if (king.canMove(this)) {
+            return false;
+        }
+
+        // can another piece block check
+        if (canBlockCheck(king)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean canBlockCheck(Piece king) {
+        for (Piece bp : piecesOnBoard) {
+            if (bp.getPlayer() != king.getPlayer() || bp == king) {
+                continue;
+            }
+            if (canBlockCheckWithPiece(king, bp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean canBlockCheckWithPiece(Piece king, Piece p) {
+        for (int r = 0; r < 8; ++r) {
+            for (int f = 0; f < 8; ++f) {
+                Coord c = new Coord(r, f);
+                if (c.equals(king.currentCoord())) {
+                    continue;
+                }
+                
+                if (c.equals(p.currentCoord())) {
+                    continue;
+                }
+               
+                Piece cp = getPiece(c);
+                if (cp != null && cp.getPlayer() == p.getPlayer()) {
+                    continue;
+                }
+
+                if (p.canTarget(this, c, false)) {
+                    Board altBoard = cloneBoard();
+                    Piece altFromPiece = altBoard.getPiece(p.currentCoord());
+                    altFromPiece.move(altBoard, c);
+                    altBoard.updateBoard();
+                    if (!altBoard.isKingInCheck(king.currentCoord())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     Chess.Player otherPlayer(Chess.Player player) {
@@ -250,12 +303,31 @@ class Board {
             return makeIllegalMove();
         }
         boolean drawOffered = false;
+        boolean promotionTargetSpecified = false;
+
+        // by default promotion target if any is the queen
+        PieceType promotionTarget = (nextPlayer == Chess.Player.white ? PieceType.WQ : PieceType.BQ);
 
         if (numTokens == 3) {
-            if (!moveTokens[2].equals("draw?")) {
+            // third token is either draw request or a promotion target
+            String t = moveTokens[2];
+            if (t.equals("draw?")) {
+                drawOffered = true;
+            } else if (t.equals("Q")) {
+                promotionTarget = (nextPlayer == Chess.Player.white ? PieceType.WQ : PieceType.BQ);
+                promotionTargetSpecified = true;
+            } else if (t.equals("N")) {
+                promotionTarget = (nextPlayer == Chess.Player.white ? PieceType.WN : PieceType.BN);
+                promotionTargetSpecified = true;
+            } else if (t.equals("R")) {
+                promotionTarget = (nextPlayer == Chess.Player.white ? PieceType.WR : PieceType.BR);
+                promotionTargetSpecified = true;
+            } else if (t.equals("B")) {
+                promotionTarget = (nextPlayer == Chess.Player.white ? PieceType.WB : PieceType.BB);
+                promotionTargetSpecified = true;
+            } else {
                 return makeIllegalMove();
             }
-            drawOffered = true;
         }
 
         Coord from = Coord.parse(moveTokens[0]);
@@ -285,6 +357,13 @@ class Board {
             return makeIllegalMove();
         }
 
+        if (fromPiece.pieceType != PieceType.WP && 
+            fromPiece.pieceType != PieceType.BP && 
+            promotionTargetSpecified) {
+            // only pawns can specify promotion targets
+            return makeIllegalMove();
+        }
+
         if (!fromPiece.canTarget(this, to, false)) {
             return makeIllegalMove();
         }
@@ -300,7 +379,7 @@ class Board {
         // normal move
         if (message == null) {
 
-            processPawnPromotion(null);
+            processPawnPromotion(promotionTarget);
 
             if (isKingInCheckmate(getKing(otherPlayer(nextPlayer)))) {
                 gameOver = true;

@@ -1,0 +1,5 @@
+INITIAL [d7:BP, f7:BP, e7:BB, e1:WK, e8:BK, a5:WR] white
+
+white a5 a8 CHECK [d7:BP, f7:BP, e7:BB, e1:WK, e8:BK, a8:WR]
+black e7 d8 OK [d7:BP, f7:BP, d8:BB, e1:WK, e8:BK, a8:WR]
+

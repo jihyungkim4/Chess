@@ -72,6 +72,16 @@ public class ChessTest {
         runScenarioTest("testfiles/test_full_game1.txt");
     }
 
+    @Test
+    public void testCanBlockCheckmate1() throws IOException {
+        runScenarioTest("testfiles/test_can_block_checkmate1.txt");
+    }
+
+    @Test
+    public void testCanBlockCheckmate2() throws IOException {
+        runScenarioTest("testfiles/test_can_block_checkmate2.txt");
+    }
+
     // Move class to store each move read from file
     static class Move {
         String player;

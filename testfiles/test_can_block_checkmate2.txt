@@ -1,0 +1,3 @@
+INITIAL [d7:BP, f7:BP, e7:BB, e1:WK, e8:BK, a5:WR, ] white
+
+white a5 a8 CHECKMATE_WHITE_WINS [d7:BP, f7:BP, e7:BB, e1:WK, e8:BK, a8:WR]
