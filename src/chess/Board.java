@@ -16,7 +16,6 @@ class Board {
         piecesOnBoard = new ArrayList<Piece>();
 
         // add all pawns
-
         piecesOnBoard.add(new Pawn(true, 2, 1));
         piecesOnBoard.add(new Pawn(true, 2, 2));
         piecesOnBoard.add(new Pawn(true, 2, 3));
@@ -108,8 +107,6 @@ class Board {
             }
         }
         this.nextPlayer = nextPlayer;
-        System.out.println();
-        PlayChess.printBoard(new ArrayList<ReturnPiece>(piecesOnBoard));
     }
 
     public Piece getPiece(int rank, int file) {

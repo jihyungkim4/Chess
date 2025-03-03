@@ -30,10 +30,6 @@ public class Chess {
 	public static void start() {
 		/* FILL IN THIS METHOD */
         board = new Board();
-        ArrayList<ReturnPiece> pieces = new ArrayList<ReturnPiece>(board.piecesOnBoard);
-        PlayChess.printBoard(pieces);
-        // board.print();
-        
 	}
 }
 
