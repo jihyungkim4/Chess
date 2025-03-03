@@ -9,59 +9,68 @@ public class ChessTest {
 
     @Test
     public void testPawnPromotion() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_promotion.txt");
+        runScenarioTest("testfiles/test_pawn_promotion.txt");
     }
 
     @Test
     public void testPawnBasic() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_basic.txt");
+        runScenarioTest("testfiles/test_pawn_basic.txt");
     }
 
     @Test
     public void testPawnEnPassant() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_en_passant.txt");
+        runScenarioTest("testfiles/test_pawn_en_passant.txt");
     }
 
     @Test
     public void testPawnEnPassant2() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_en_passant2.txt");
+        runScenarioTest("testfiles/test_pawn_en_passant2.txt");
     }
 
     @Test
     public void testPawnCaptureWhite() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_capture_white.txt");
+        runScenarioTest("testfiles/test_pawn_capture_white.txt");
     }
 
     @Test
     public void testPawnCaptureBlack() throws IOException {
-        runScenarioTest("testfiles\\test_pawn_capture_black.txt");
+        runScenarioTest("testfiles/test_pawn_capture_black.txt");
     }
 
     @Test
     public void testBasicCheckmate() throws IOException {
-        runScenarioTest("testfiles\\test_basic_checkmate.txt");
+        runScenarioTest("testfiles/test_basic_checkmate.txt");
     }
 
-    // ABOVE TESTS PASS BUT DISABLED FOR CLARITY
     @Test
     public void testCastlingWhite() throws IOException {
-        runScenarioTest("testfiles\\test_castling1.txt");
+        runScenarioTest("testfiles/test_castling1.txt");
     }
 
-    // @Test
-    // public void testPawnMovements() throws IOException {
-    // runScenarioTest("testfiles\\test_pawn_movements.txt");
-    // }
+    @Test
+    public void testBishopBasic() throws IOException {
+        runScenarioTest("testfiles/test_bishop_basic_moves.txt");
+    }
 
-    // @Test
-    // public void testCastling() throws IOException {
-    // runScenarioTest("testfiles\\test_castling.txt");
-    // }
+    @Test
+    public void testRookBasic() throws IOException {
+        runScenarioTest("testfiles/rook_basic_move_test.txt");
+    }
 
-    // @Test
-    // public void testDrawScenarios() throws IOException {
-    // runScenarioTest("testfiles\\test_draw_scenarios.txt");
-    // }
+    @Test
+    public void testKnightBasic() throws IOException {
+        runScenarioTest("testfiles/test_knight_basic_moves.txt");
+    }
+
+    @Test
+    public void testQueenBasic() throws IOException {
+        runScenarioTest("testfiles/test_queen_basic_moves.txt");
+    }
+    
+    @Test
+    public void testFullGame() throws IOException {
+        runScenarioTest("testfiles/test_full_game1.txt");
+    }
 
     // Move class to store each move read from file
     static class Move {

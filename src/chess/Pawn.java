@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
-
 class Pawn extends Piece {
     // pawn can only moved long from initial position and only once
     Coord longMoveDst = null;
@@ -31,9 +29,6 @@ class Pawn extends Piece {
 
     @Override
     public ReturnPlay.Message move(Board board, Coord dest) {
-        if (!canTarget(board, dest, false)) {
-            return ReturnPlay.Message.ILLEGAL_MOVE;
-        }
         Coord src = currentCoord();
         updatePosition(dest, board);
         if (empassantCapturedPiece != null) {

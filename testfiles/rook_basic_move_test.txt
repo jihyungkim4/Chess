@@ -1,0 +1,35 @@
+INITIAL [a1:WR, h8:BR, e1:WK, e8:BK] white
+
+# Legal moves following turn order
+white a1 a4 OK [a4:WR, h8:BR, e1:WK, e8:BK]  
+black h8 h5 OK [a4:WR, h5:BR, e1:WK, e8:BK]  
+white a4 a8 CHECK [a8:WR, h5:BR, e1:WK, e8:BK]  
+black h5 d5 ILLEGAL_MOVE [a8:WR, h5:BR, e1:WK, e8:BK]  
+black e8 e7 OK [a8:WR, h5:BR, e1:WK, e7:BK]
+
+# Illegal moves maintaining turn order (same player retries after ILLEGAL_MOVE)
+white a8 b7 ILLEGAL_MOVE [a8:WR, h5:BR, e1:WK, e7:BK]
+white a8 f8 OK [f8:WR, h5:BR, e1:WK, e7:BK]  
+black h5 h3 OK [f8:WR, h3:BR, e1:WK, e7:BK]
+white e1 d1 OK [f8:WR, h3:BR, d1:WK, e7:BK]  
+black h3 e4 ILLEGAL_MOVE [f8:WR, h3:BR, d1:WK, e7:BK] 
+black h3 d3 CHECK [f8:WR, d3:BR, d1:WK, e7:BK]  
+white d1 e1 OK [f8:WR, d3:BR, e1:WK, e7:BK]
+black d3 d7 OK [f8:WR, d7:BR, e1:WK, e7:BK]
+white f8 a8 OK [a8:WR, d7:BR, e1:WK, e7:BK]
+black e7 f7 OK [a8:WR, d7:BR, e1:WK, f7:BK]
+white a8 a7 OK [a7:WR, d7:BR, e1:WK, f7:BK]
+black d7 d8 ILLEGAL_MOVE [a7:WR, d7:BR, e1:WK, f7:BK]
+black d7 e7 CHECK [a7:WR, e7:BR, e1:WK, f7:BK]
+white a7 e7 CHECK [e7:WR, e1:WK, f7:BK]
+black f7 g6 OK [e7:WR, e1:WK, g6:BK]
+white e1 f2 OK [e7:WR, f2:WK, g6:BK]
+black g6 h5 OK [e7:WR, f2:WK, h5:BK]
+white f2 f3 OK [e7:WR, f3:WK, h5:BK]
+black h5 h4 OK [e7:WR, f3:WK, h4:BK]
+white e7 e5 OK [e5:WR, f3:WK, h4:BK]
+black h4 h3 OK [e5:WR, f3:WK, h3:BK]
+white e5 h5 CHECKMATE_WHITE_WINS [h5:WR, f3:WK, h3:BK]
+
+
+

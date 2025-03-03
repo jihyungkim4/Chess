@@ -1,9 +1,7 @@
 package chess;
 
-abstract class Piece extends ReturnPiece {
+abstract class Piece extends ReturnPiece implements Cloneable {
     boolean isWhite;
-    // canTarget needs to ignore pieces with this flag set to true
-    boolean movePending;
 
     public static PieceFile mapIntToFile(int file) {
         if (file < 1 || file > 8) {
@@ -14,7 +12,6 @@ abstract class Piece extends ReturnPiece {
 
     public Piece(boolean isWhite, int rank, int file) {
         this.isWhite = isWhite;
-        this.movePending = false;
         if (rank < 1 || rank > 8) {
             throw new IllegalArgumentException("Rank must be between 1 and 8");
         }
@@ -54,8 +51,10 @@ abstract class Piece extends ReturnPiece {
             board.removePiece(coord);
             board.piecesOnBoard.remove(targetPiece);
         }
+        board.removePiece(currentCoord());
         pieceRank = coord.r + 1;
         pieceFile = mapIntToFile(coord.f + 1);
+        board.putPiece(currentCoord(), this);
     }
 
     public abstract void print();
@@ -75,4 +74,9 @@ abstract class Piece extends ReturnPiece {
     // return true if a piece can make any legal move, (do not consider safety of
     // own king)
     public abstract boolean canMove(Board board);
+
+    @Override
+    public Piece clone() throws CloneNotSupportedException {
+        return (Piece) super.clone();
+    }
 }

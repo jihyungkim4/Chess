@@ -1,0 +1,23 @@
+INITIAL [b1:WK, e1:WQ, d2:WP, h3:WP, e4:WN, d6:BP, d8:BQ, e8:BK] white
+
+white e4 d6 CHECK [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, e8:BK]
+black d8 d6 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, e8:BK]
+black d8 e7 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, e8:BK]
+black e8 f8 OK [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 g2 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 d2 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 c3 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 a1 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 a6 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 e9 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white i1 i2 ILLEGAL_MOVE [b1:WK, e1:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+white e1 f2 CHECK [b1:WK, f2:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+black d8 b8 ILLEGAL_MOVE [b1:WK, f2:WQ, d2:WP, h3:WP, d6:WN, d8:BQ, f8:BK]
+black d8 f6 OK [b1:WK, f2:WQ, d2:WP, h3:WP, d6:WN, f6:BQ, f8:BK]
+white f2 c5 OK [b1:WK, c5:WQ, d2:WP, h3:WP, d6:WN, f6:BQ, f8:BK]
+black f6 f5 CHECK [b1:WK, c5:WQ, d2:WP, h3:WP, d6:WN, f5:BQ, f8:BK]
+
+white d6 f5 CHECK [b1:WK, c5:WQ, d2:WP, h3:WP, f5:WN, f8:BK]
+black f8 e8 OK [b1:WK, c5:WQ, d2:WP, h3:WP, f5:WN, e8:BK]
+white c5 e7 CHECKMATE_WHITE_WINS [b1:WK, e7:WQ, d2:WP, h3:WP, f5:WN, e8:BK]
+

@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +26,6 @@ class Knight extends Piece {
 
     @Override
     public ReturnPlay.Message move(Board board, Coord dest) {
-        if (!canTarget(board, dest, false)) {
-            return ReturnPlay.Message.ILLEGAL_MOVE;
-        }
         updatePosition(dest, board);
         return null;
     }

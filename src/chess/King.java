@@ -37,15 +37,18 @@ class King extends Piece {
     }
 
     private boolean isKingInCheck(Coord kingCoord, Board board) {
-        Chess.Player opponentColor = board.otherPlayer(getPlayer());
-        for (Piece piece : board.piecesOnBoard) {
-            if (piece.getPlayer() == opponentColor) {
-                if (piece.canTarget(board, kingCoord, true)) {
-                    return true;
+        if (kingCoord.equals(currentCoord())) {
+            Chess.Player opponentColor = board.otherPlayer(getPlayer());
+            for (Piece piece : board.piecesOnBoard) {
+                if (piece.getPlayer() == opponentColor) {
+                    if (piece.canTarget(board, kingCoord, true)) {
+                        return true;
+                    }
                 }
             }
+            return false;
         }
-        return false;
+        return board.isKingInCheckAfterMove(this, kingCoord);
     }
 
     @Override
@@ -61,9 +64,6 @@ class King extends Piece {
     public ReturnPlay.Message move(Board board, Coord dest) {
         // if we can move there we should move there : otherwise illegal
         // if we move there, and an opponent piece is there, we take it
-        if (!canTarget(board, dest, false)) {
-            return ReturnPlay.Message.ILLEGAL_MOVE;
-        }
         updatePosition(dest, board);
         hasMoved = true;
         return null;

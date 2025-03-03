@@ -1,3 +1,4 @@
+// Julia Gurando and Jihyung Kim
 package chess;
 
 import java.util.ArrayList;

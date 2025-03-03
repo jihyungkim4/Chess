@@ -153,6 +153,10 @@ class Board {
         board[coord.r][coord.f] = null;
     }
 
+    void putPiece(Coord coord, Piece piece) {
+        board[coord.r][coord.f] = piece;
+    }
+
     // function returns the location of the king of the next player to move
     private Coord getKing(Chess.Player player) {
         Piece.PieceType matchingKing = (player == Chess.Player.white) ? Piece.PieceType.WK : Piece.PieceType.BK;
@@ -281,14 +285,14 @@ class Board {
             return makeIllegalMove();
         }
 
-        // will moving put my king in check
-        if (fromPiece.pieceType != ReturnPiece.PieceType.BK && fromPiece.pieceType != ReturnPiece.PieceType.WK) {
-            fromPiece.movePending = true;
-            if (isKingInCheck(getKing(nextPlayer))) {
-                fromPiece.movePending = false;
-                return makeIllegalMove();
-            }
-            fromPiece.movePending = false;
+        if (!fromPiece.canTarget(this, to, false)) {
+            return makeIllegalMove();
+        }
+
+        // AT THIS POINT special rules regarding checks need to happen
+
+        if (!doSpecialChecks(from, to)) {
+            return makeIllegalMove();
         }
 
         ReturnPlay.Message message = fromPiece.move(this, to);
@@ -398,4 +402,44 @@ class Board {
         System.out.println();
     }
 
+    private boolean doSpecialChecks(Coord from, Coord to) {
+        Board altBoard = cloneBoard();
+        Piece altFromPiece = altBoard.getPiece(from);
+        altFromPiece.move(altBoard, to);
+        altBoard.updateBoard();
+        return !altBoard.isKingInCheck(altBoard.getKing(nextPlayer));
+    }
+
+    boolean isKingInCheckAfterMove(King p, Coord newCoord) {
+        Board altBoard = cloneBoard();
+        Piece altFromPiece = altBoard.getPiece(p.currentCoord());
+        altFromPiece.move(altBoard, newCoord);
+        altBoard.updateBoard();
+        return altBoard.isKingInCheck(newCoord);
+    }
+
+    private Board cloneBoard() {
+        Board altBoard = new Board();
+        altBoard.gameOver = gameOver;
+        altBoard.moveNumber = moveNumber;
+        altBoard.nextPlayer = nextPlayer;
+        altBoard.piecesOnBoard.clear();
+
+        for (Piece p : piecesOnBoard) {
+            try {
+                Piece altPiece = p.clone();
+                altBoard.piecesOnBoard.add(altPiece);
+            } catch (java.lang.CloneNotSupportedException e) {
+                assert false;
+            }
+        }
+
+        if (promotionPawn != null) {
+            Coord promCoord = promotionPawn.currentCoord();
+            altBoard.promotionPawn = (Pawn) altBoard.getPiece(promCoord);
+        }
+
+        altBoard.updateBoard();
+        return altBoard;
+    }
 }

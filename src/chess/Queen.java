@@ -24,7 +24,7 @@ class Queen extends Piece {
             if (dst == null) {
                 break;
             }
-            if (board.getPiece(dst) != null && !board.getPiece(dst).movePending) {
+            if (board.getPiece(dst) != null) {
                 break;
             }
         }
@@ -44,9 +44,6 @@ class Queen extends Piece {
     public ReturnPlay.Message move(Board board, Coord dest) {
         // if we can move there we should move there : otherwise illegal
         // if we move there, and an opponent piece is there, we take it
-        if (!canTarget(board, dest, false)) {
-            return ReturnPlay.Message.ILLEGAL_MOVE;
-        }
         updatePosition(dest, board);
         return null;
     }

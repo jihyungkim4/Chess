@@ -22,7 +22,7 @@ class Rook extends Piece {
             if (dst != null && dst.equals(target)) {
                 return true;
             }
-            if (dst == null || (board.getPiece(dst) != null && !board.getPiece(dst).movePending)) {
+            if (dst == null || board.getPiece(dst) != null) {
                 break;
             }
         }
@@ -40,9 +40,6 @@ class Rook extends Piece {
 
     @Override
     public ReturnPlay.Message move(Board board, Coord dest) {
-        if (!canTarget(board, dest, false)) {
-            return ReturnPlay.Message.ILLEGAL_MOVE;
-        }
         updatePosition(dest, board);
         hasMoved = true;
         return null;

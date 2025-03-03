@@ -1,0 +1,26 @@
+INITIAL [c1:WB, f8:BB, e1:WK, e8:BK] white
+
+# Legal moves following turn order
+white c1 e3 OK [e3:WB, f8:BB, e1:WK, e8:BK]  
+black f8 d6 OK [e3:WB, d6:BB, e1:WK, e8:BK]  
+white e3 g5 OK [g5:WB, d6:BB, e1:WK, e8:BK]  
+black d6 b4 CHECK [g5:WB, b4:BB, e1:WK, e8:BK]  
+
+# Illegal moves maintaining turn order (same player retries after ILLEGAL_MOVE)
+white g5 g6 ILLEGAL_MOVE [g5:WB, b4:BB, e1:WK, e8:BK]  
+white g5 d2 OK [d2:WB, b4:BB, e1:WK, e8:BK]  
+black b4 b3 ILLEGAL_MOVE [d2:WB, b4:BB, e1:WK, e8:BK]
+black b4 c4 ILLEGAL_MOVE [d2:WB, b4:BB, e1:WK, e8:BK]  
+black b4 a5 OK [d2:WB, a5:BB, e1:WK, e8:BK]
+
+# moving white bishop at this point would expose king so not allowed
+white d2 c1 ILLEGAL_MOVE [d2:WB, a5:BB, e1:WK, e8:BK]
+
+white d2 c3 OK [c3:WB, a5:BB, e1:WK, e8:BK]
+black e8 f8 OK [c3:WB, a5:BB, e1:WK, f8:BK]
+white c3 a5 OK [a5:WB, e1:WK, f8:BK]
+black f8 e8 OK [a5:WB, e1:WK, e8:BK]
+white e1 f1 OK [a5:WB, f1:WK, e8:BK]
+black e8 d8 ILLEGAL_MOVE [a5:WB, f1:WK, e8:BK]
+
+
