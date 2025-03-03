@@ -21,6 +21,7 @@ black e8 f8 OK [c3:WB, a5:BB, e1:WK, f8:BK]
 white c3 a5 OK [a5:WB, e1:WK, f8:BK]
 black f8 e8 OK [a5:WB, e1:WK, e8:BK]
 white e1 f1 OK [a5:WB, f1:WK, e8:BK]
-black e8 d8 ILLEGAL_MOVE [a5:WB, f1:WK, e8:BK]
-
+black e8 f8 draw? DRAW [a5:WB, f1:WK, f8:BK]
+# white can still try to make a move but it will be illegal cause the game is over
+white a5 b4 ILLEGAL_MOVE [a5:WB, f1:WK, f8:BK]
 
